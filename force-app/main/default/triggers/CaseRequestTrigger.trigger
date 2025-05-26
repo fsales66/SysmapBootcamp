@@ -4,6 +4,7 @@ trigger CaseRequestTrigger on Case_Request__c(
   after insert,
   after update
 ) {
+  //Com o operationType conseguimos definir o tipo de trigger
   switch on Trigger.operationType {
     when BEFORE_INSERT {
       // Handler para before insert
@@ -15,6 +16,8 @@ trigger CaseRequestTrigger on Case_Request__c(
       // Handler para after insert
     }
     when AFTER_UPDATE {
+      // Chama o método createCaseHistory da classe Handler
+      // Passa como parametro a lista dos registros que acionaram o trigger
       CaseRequestTriggerHandler.createCaseHistory(Trigger.new);
     }
   }
