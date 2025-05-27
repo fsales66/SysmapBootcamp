@@ -22,9 +22,9 @@ public with sharing class CaseRequestTriggerHandlerTest {
       SELECT Id, Name, Status__c, SLA_Deadline__c
       FROM Case_Request__c
     ];
-    test.startTest();
+    Test.startTest();
     CaseRequestTriggerHandler.createCaseHistory(cr);
-    test.stopTest();
+    Test.stopTest();
 
     List<Case_History__c> newCaseHistories = [
       SELECT Id, Name, Case__c
