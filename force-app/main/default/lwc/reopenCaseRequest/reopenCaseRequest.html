@@ -1,3 +1,37 @@
 <template>
-    
+  <lightning-card title="Área Support Premium">
+    <div class="custom-container">
+      <p>
+        <strong>Prazo SLA: </strong>
+        <lightning-formatted-date-time
+          value={slaDeadline}
+          year="numeric"
+          month="numeric"
+          day="numeric"
+          hour="2-digit"
+          minute="2-digit"
+          weekday="long"
+          time-zone="UTC"
+          time-zone-name="short"
+          hour12={ampm}
+        ></lightning-formatted-date-time>
+      </p>
+
+      <template lwc:if={isNotClosed}>
+        <p><strong>Tempo restante SLA:</strong> {timer}</p>
+      </template>
+
+      <p><strong>Status:</strong> {status}</p>
+
+      <template lwc:if={isClosed}>
+        <lightning-button
+          variant="brand-outline"
+          label="Reabrir Caso"
+          title="Clique aqui para reabrir o caso"
+          onclick={handleClick}
+          class="reopen-button"
+        ></lightning-button>
+      </template>
+    </div>
+  </lightning-card>
 </template>

@@ -1,0 +1,16 @@
+.custom-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.custom-container p {
+  margin: 0.5rem 0;
+}
+
+.reopen-button {
+  margin-top: 1rem;
+}
