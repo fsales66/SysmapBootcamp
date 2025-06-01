@@ -1,27 +1,38 @@
 public with sharing class CaseRequestTriggerHandler {
-  //Método que cria registros do objeto Case_History
-  public static void createCaseHistory(List<Case_Request__c> crList) {
-    //Criação da lista que será inserida
+  // Método que cria registros do objeto Case_History
+  public static void createCaseHistory(
+    List<Case_Request__c> crListNew,
+    List<Case_Request__c> crListOld
+  ) {
     List<Case_History__c> caseHistories = new List<Case_History__c>();
-    for (Case_Request__c cr : crList) {
-      //Se o Case Request tiver sido fechado, se cria um Case History
-      if (cr.Status__c == 'Closed') {
+
+    // Mapeia a lista antiga (Trigger.old) por Id para facilitar comparação
+    Map<Id, Case_Request__c> oldCaseMap = new Map<Id, Case_Request__c>();
+    for (Case_Request__c oldCr : crListOld) {
+      oldCaseMap.put(oldCr.Id, oldCr);
+    }
+
+    for (Case_Request__c newCr : crListNew) {
+      Case_Request__c oldCr = oldCaseMap.get(newCr.Id);
+
+      // Verifica se o Status foi alterado de diferente de Closed para Closed
+      if (oldCr.Status__c != 'Closed' && newCr.Status__c == 'Closed') {
         datetime dateTimeAtual = datetime.now();
+
         Case_History__c ch = new Case_History__c(
-          Case__c = cr.Id,
+          Case__c = newCr.Id,
           Time_Closed__c = dateTimeAtual
         );
-        //Se o caso tiver sido fechado dentro da Deadline, SLA Met é verdadeiro
-        if (cr.SLA_Deadline__c >= dateTimeAtual) {
+
+        // Se o caso tiver sido fechado dentro da Deadline, SLA Met é verdadeiro
+        if (newCr.SLA_Deadline__c >= dateTimeAtual) {
           ch.SLA_Met__c = true;
         }
 
-        //Add o Case History para a lista
         caseHistories.add(ch);
       }
     }
 
-    //Se a lista tiver elementos, insere a lista
     if (!caseHistories.isEmpty()) {
       insert caseHistories;
     }
