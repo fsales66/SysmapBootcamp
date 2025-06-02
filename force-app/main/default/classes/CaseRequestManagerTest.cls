@@ -3,18 +3,14 @@ public with sharing class CaseRequestManagerTest {
   //TestSetup é responsável por gerar o dado que será utilizado nos demais testes
   @TestSetup
   static void dataSetup() {
-    List<Case_Request__c> newCases = new List<Case_Request__c>();
-    for (Integer i = 0; i < 2; i++) {
-      Case_Request__c caseR = new Case_Request__c(
-        Name = 'Case ' + i,
-        Priority__c = 'Low',
-        Subject__c = 'Dado teste',
-        Status__c = 'Closed',
-        Resolution_Notes__c = 'Dados teste'
-      );
-      newCases.add(caseR);
-    }
-    insert newCases;
+    Case_Request__c newCase = new Case_Request__c();
+    newCase.Name = 'Case 1';
+    newCase.Priority__c = 'Low';
+    newCase.Subject__c = 'Dado teste';
+    newCase.Status__c = 'Closed';
+    newCase.Resolution_Notes__c = 'Dados teste';
+
+    insert newCase;
   }
 
   //test1 cenário em que dá tudo certo, registro existe e o statusCode é 200 (OK)
