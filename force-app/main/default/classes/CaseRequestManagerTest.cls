@@ -67,7 +67,7 @@ public with sharing class CaseRequestManagerTest {
     RestContext.request = req;
     RestContext.response = res;
     Test.startTest();
-    Case_Request__c result2 = CaseRequestManager.getCaseRequestById();
+    Case_Request__c result3 = CaseRequestManager.getCaseRequestById();
     Test.stopTest();
 
     System.assertEquals(400, res.statusCode, 'Status Code incorreto');
